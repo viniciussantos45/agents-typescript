@@ -1,0 +1,17 @@
+{
+  "name": "agents-typescript",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@openrouter/ai-sdk-provider": "^2.9.0",
+    "ai": "^6.0.198",
+    "zod": "^4.4.3"
+  }
+}
