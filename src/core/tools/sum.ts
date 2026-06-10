@@ -1,7 +1,8 @@
-import { tool } from "ai";
+import { defineTool } from "./types";
 import { z } from "zod";
 
-export const sumTwoNumbersTool = tool({
+export const sumTwoNumbersTool = defineTool({
+  name: "sumTwoNumbersTool",
   description: "A tool that sums two numbers.",
   inputSchema: z.object({
     a: z.number().describe("The first number to sum."),
@@ -14,7 +15,8 @@ export const sumTwoNumbersTool = tool({
   },
 });
 
-export const sumListOfNumbersTool = tool({
+export const sumListOfNumbersTool = defineTool({
+  name: "sumListOfNumbersTool",
   description: "A tool that sums a list of numbers.",
   inputSchema: z.object({
     numbers: z.array(z.number()).describe("The list of numbers to sum."),

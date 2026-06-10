@@ -1,4 +1,4 @@
-import { tool } from "ai";
+import { defineTool } from "./types";
 import { createInterface } from "readline";
 import { z } from "zod";
 
@@ -46,7 +46,8 @@ async function prompt(question: string): Promise<string> {
  * Ask the human a free-form question and return their answer.
  * Use for clarifications, missing info, or open-ended input.
  */
-export const askHumanTool = tool({
+export const askHumanTool = defineTool({
+  name: "askHumanTool",
   description:
     "Pause execution and ask the human a free-form question. Use when you need clarification, missing information, or any open-ended input to proceed. Returns the human's verbatim response.",
   inputSchema: z.object({
@@ -75,7 +76,8 @@ export const askHumanTool = tool({
  * Ask the human to confirm or reject an action.
  * Use before irreversible or high-impact operations.
  */
-export const confirmHumanTool = tool({
+export const confirmHumanTool = defineTool({
+  name: "confirmHumanTool",
   description:
     "Pause and ask the human to approve or reject a specific action before proceeding. Returns whether they confirmed, plus an optional comment. Always use before irreversible or high-impact actions.",
   inputSchema: z.object({
@@ -134,7 +136,8 @@ export const confirmHumanTool = tool({
  * Present the human with labeled options and return their selection.
  * Use when the agent must branch on a human decision.
  */
-export const chooseHumanTool = tool({
+export const chooseHumanTool = defineTool({
+  name: "chooseHumanTool",
   description:
     "Present the human with a numbered list of options and return the one they select. Use when the agent must branch based on a human decision and the options are known in advance.",
   inputSchema: z.object({
@@ -188,7 +191,8 @@ export const chooseHumanTool = tool({
  * Show content to the human for review and collect their approval + feedback.
  * Use before publishing, sending, or applying generated content.
  */
-export const reviewHumanTool = tool({
+export const reviewHumanTool = defineTool({
+  name: "reviewHumanTool",
   description:
     "Show content to the human for review and collect their approval plus optional feedback. Use before publishing, sending, or applying AI-generated content. Returns whether they approved and any feedback they provided.",
   inputSchema: z.object({
@@ -236,7 +240,8 @@ export const reviewHumanTool = tool({
  * Collect multiple named fields from the human via sequential prompts.
  * Use to gather structured data when schema is not known at compile time.
  */
-export const collectFormHumanTool = tool({
+export const collectFormHumanTool = defineTool({
+  name: "collectFormHumanTool",
   description:
     "Ask the human to fill in multiple named fields via sequential prompts and return all answers as a key/value record. Use when you need several related pieces of information at once.",
   inputSchema: z.object({
@@ -301,7 +306,8 @@ export const collectFormHumanTool = tool({
  * Send a one-way notification to the human.
  * Non-blocking — does not wait for a response.
  */
-export const notifyHumanTool = tool({
+export const notifyHumanTool = defineTool({
+  name: "notifyHumanTool",
   description:
     "Print a one-way status notification to the human without waiting for a response. Use for progress updates, warnings, or informational messages during long-running tasks.",
   inputSchema: z.object({
@@ -343,7 +349,8 @@ export const notifyHumanTool = tool({
  * Pause the agent at a checkpoint and wait for the human to press Enter.
  * Use to create explicit breakpoints in multi-step flows.
  */
-export const waitForHumanTool = tool({
+export const waitForHumanTool = defineTool({
+  name: "waitForHumanTool",
   description:
     "Pause the agent at a named checkpoint and wait for the human to press Enter before continuing. Use to create explicit breakpoints in multi-step flows where the human should stay in the loop.",
   inputSchema: z.object({
@@ -395,7 +402,8 @@ export const waitForHumanTool = tool({
  * Ask the human to rate something on a numeric scale.
  * Use to collect feedback scores or priority rankings.
  */
-export const rateHumanTool = tool({
+export const rateHumanTool = defineTool({
+  name: "rateHumanTool",
   description:
     "Ask the human to rate something on a numeric scale and optionally explain their rating. Use to collect feedback scores, satisfaction ratings, or priority rankings.",
   inputSchema: z.object({

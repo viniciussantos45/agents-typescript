@@ -1,17 +1,9 @@
-import { ToolLoopAgent } from "ai";
-import { ollamaAiSdkProvider } from "../../dependencies/ai-sdk/providers";
-import { obsidianTools } from "../../tools";
+import { obsidianTools } from "../tools";
+import type { AgentDefinition } from "./types";
 
-// const model = ollamaAiSdkProvider.chat("gemma4:e4b");
-// const model = ollamaAiSdkProvider.chat("llama3.2:3b");
-const model = ollamaAiSdkProvider.chat("qwen3.5:2b");
-
-export const obsidianOrchestratorAgent = new ToolLoopAgent({
-  model,
-  // providerOptions: {
-  //   ollama: { think: true },
-  // },
-  // stopWhen: stepCountIs(5),
+export const obsidianOrchestratorAgentDefinition: AgentDefinition = {
+  name: "obsidianOrchestratorAgent",
+  model: { provider: "ollama", model: "qwen3.5:2b" },
   instructions: `You manage the user's Obsidian vault using the tools available to you. Always use the most specific tool for the job. When a request is ambiguous (e.g. "find my note on X"), prefer search tools before assuming a file path.
 
 Capability areas and when to use them:
@@ -35,6 +27,5 @@ Capability areas and when to use them:
 - Utility (version, random note, recent files, workspace, tabs, diff) — miscellaneous vault inspection.
 
 Before deleting or permanently removing any file, make sure the request clearly intends a destructive action.`,
-
-  tools: { ...obsidianTools },
-});
+  tools: Object.values(obsidianTools),
+};

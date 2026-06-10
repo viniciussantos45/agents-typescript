@@ -1,22 +1,23 @@
-import { personalAssistantAgent } from "./src/agents/personal-assistant";
+import { personalAssistantAgentDefinition } from "./src/core/agents";
 
-const result = await personalAssistantAgent.generate({
-  prompt: "Check what are my long term goals for this year in my vault",
-});
+const framework =
+  process.argv[2] ?? process.env.AGENT_FRAMEWORK ?? "ai-sdk";
 
-// let message: string;
+if (framework !== "ai-sdk" && framework !== "langchain") {
+  console.error(`Unknown framework "${framework}". Use: ai-sdk | langchain`);
+  process.exit(1);
+}
 
-// do {
-//   message = prompt(
-//     "Make a question to the agent about your notes in Obsidian. For example, you can ask 'What are the main topics I have notes on?' or 'Summarize my notes from last week.'",
-//   ) as string;
-// } while (!message);
+const { runAgent } =
+  framework === "langchain"
+    ? await import("./src/frameworks/langchain")
+    : await import("./src/frameworks/ai-sdk");
 
-// const result = await obsidianOrchestratorAgent.generate({
-//   prompt: message,
-// });
+console.log(`Running personal assistant with the ${framework} strategy…\n`);
 
-console.log(JSON.stringify(result, null, 2));
-console.log(result.text);
+const text = await runAgent(
+  personalAssistantAgentDefinition,
+  "Check what are my long term goals for this year in my vault",
+);
 
-// console.log(result);
+console.log(text);

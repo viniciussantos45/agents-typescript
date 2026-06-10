@@ -1,4 +1,4 @@
-import { tool } from "ai";
+import { defineTool } from "./types";
 import { z } from "zod";
 
 async function runObsidian(
@@ -39,7 +39,8 @@ async function runObsidian(
 
 // ─── File Operations ─────────────────────────────────────────────────────────
 
-export const obsidianReadFileTool = tool({
+export const obsidianReadFileTool = defineTool({
+  name: "obsidianReadFileTool",
   description: "Read the contents of a file in the Obsidian vault.",
   inputSchema: z.object({
     file: z.string().optional().describe("File name (wikilink-style lookup)"),
@@ -51,7 +52,8 @@ export const obsidianReadFileTool = tool({
     runObsidian("read", { file, path }, vault),
 });
 
-export const obsidianCreateFileTool = tool({
+export const obsidianCreateFileTool = defineTool({
+  name: "obsidianCreateFileTool",
   description: "Create a new file in the Obsidian vault.",
   inputSchema: z.object({
     name: z.string().optional().describe("File name"),
@@ -74,7 +76,8 @@ export const obsidianCreateFileTool = tool({
     ),
 });
 
-export const obsidianAppendToFileTool = tool({
+export const obsidianAppendToFileTool = defineTool({
+  name: "obsidianAppendToFileTool",
   description: "Append content to an existing file in the Obsidian vault.",
   inputSchema: z.object({
     content: z
@@ -90,7 +93,8 @@ export const obsidianAppendToFileTool = tool({
     runObsidian("append", { content, file, path, inline }, vault),
 });
 
-export const obsidianPrependToFileTool = tool({
+export const obsidianPrependToFileTool = defineTool({
+  name: "obsidianPrependToFileTool",
   description:
     "Prepend content to the beginning of a file in the Obsidian vault.",
   inputSchema: z.object({
@@ -110,7 +114,8 @@ export const obsidianPrependToFileTool = tool({
     runObsidian("prepend", { content, file, path, inline }, vault),
 });
 
-export const obsidianDeleteFileTool = tool({
+export const obsidianDeleteFileTool = defineTool({
+  name: "obsidianDeleteFileTool",
   description:
     "Delete a file from the Obsidian vault (moves to trash unless permanent is set).",
   inputSchema: z.object({
@@ -127,7 +132,8 @@ export const obsidianDeleteFileTool = tool({
     runObsidian("delete", { file, path, permanent }, vault),
 });
 
-export const obsidianMoveFileTool = tool({
+export const obsidianMoveFileTool = defineTool({
+  name: "obsidianMoveFileTool",
   description: "Move or rename a file in the Obsidian vault.",
   inputSchema: z.object({
     to: z.string().describe("Destination folder or full path (required)"),
@@ -140,7 +146,8 @@ export const obsidianMoveFileTool = tool({
     runObsidian("move", { to, file, path }, vault),
 });
 
-export const obsidianRenameFileTool = tool({
+export const obsidianRenameFileTool = defineTool({
+  name: "obsidianRenameFileTool",
   description: "Rename a file in the Obsidian vault.",
   inputSchema: z.object({
     name: z.string().describe("New file name (required)"),
@@ -153,7 +160,8 @@ export const obsidianRenameFileTool = tool({
     runObsidian("rename", { name, file, path }, vault),
 });
 
-export const obsidianOpenFileTool = tool({
+export const obsidianOpenFileTool = defineTool({
+  name: "obsidianOpenFileTool",
   description: "Open a file in Obsidian.",
   inputSchema: z.object({
     file: z.string().optional().describe("File name"),
@@ -166,7 +174,8 @@ export const obsidianOpenFileTool = tool({
     runObsidian("open", { file, path, newtab }, vault),
 });
 
-export const obsidianFileInfoTool = tool({
+export const obsidianFileInfoTool = defineTool({
+  name: "obsidianFileInfoTool",
   description:
     "Show metadata and info about a specific file in the Obsidian vault.",
   inputSchema: z.object({
@@ -181,7 +190,8 @@ export const obsidianFileInfoTool = tool({
 
 // ─── Search ──────────────────────────────────────────────────────────────────
 
-export const obsidianSearchTool = tool({
+export const obsidianSearchTool = defineTool({
+  name: "obsidianSearchTool",
   description:
     "Search the Obsidian vault for text and return matching file names.",
   inputSchema: z.object({
@@ -220,7 +230,8 @@ export const obsidianSearchTool = tool({
     ),
 });
 
-export const obsidianSearchContextTool = tool({
+export const obsidianSearchContextTool = defineTool({
+  name: "obsidianSearchContextTool",
   description:
     "Search the Obsidian vault and return matching lines with surrounding context.",
   inputSchema: z.object({
@@ -245,7 +256,8 @@ export const obsidianSearchContextTool = tool({
 
 // ─── Vault & Listing ─────────────────────────────────────────────────────────
 
-export const obsidianVaultInfoTool = tool({
+export const obsidianVaultInfoTool = defineTool({
+  name: "obsidianVaultInfoTool",
   description:
     "Show information about the Obsidian vault (name, path, file count, etc.).",
   inputSchema: z.object({
@@ -259,7 +271,8 @@ export const obsidianVaultInfoTool = tool({
   execute: async ({ info, vault }) => runObsidian("vault", { info }, vault),
 });
 
-export const obsidianListVaultsTool = tool({
+export const obsidianListVaultsTool = defineTool({
+  name: "obsidianListVaultsTool",
   description: "List all known Obsidian vaults.",
   inputSchema: z.object({
     total: z.boolean().optional().describe("Return only the vault count"),
@@ -270,7 +283,8 @@ export const obsidianListVaultsTool = tool({
     runObsidian("vaults", { total, verbose }),
 });
 
-export const obsidianListFilesTool = tool({
+export const obsidianListFilesTool = defineTool({
+  name: "obsidianListFilesTool",
   description:
     "List files in the Obsidian vault, optionally filtered by folder or extension.",
   inputSchema: z.object({
@@ -284,7 +298,8 @@ export const obsidianListFilesTool = tool({
     runObsidian("files", { folder, ext, total }, vault),
 });
 
-export const obsidianListFoldersTool = tool({
+export const obsidianListFoldersTool = defineTool({
+  name: "obsidianListFoldersTool",
   description: "List folders in the Obsidian vault.",
   inputSchema: z.object({
     folder: z.string().optional().describe("Filter by parent folder"),
@@ -296,7 +311,8 @@ export const obsidianListFoldersTool = tool({
     runObsidian("folders", { folder, total }, vault),
 });
 
-export const obsidianFolderInfoTool = tool({
+export const obsidianFolderInfoTool = defineTool({
+  name: "obsidianFolderInfoTool",
   description:
     "Show info (file count, subfolder count, size) for a specific folder.",
   inputSchema: z.object({
@@ -312,7 +328,8 @@ export const obsidianFolderInfoTool = tool({
     runObsidian("folder", { path, info }, vault),
 });
 
-export const obsidianOrphansTool = tool({
+export const obsidianOrphansTool = defineTool({
+  name: "obsidianOrphansTool",
   description: "List files in the vault that have no incoming links (orphans).",
   inputSchema: z.object({
     total: z.boolean().optional().describe("Return only the orphan count"),
@@ -324,7 +341,8 @@ export const obsidianOrphansTool = tool({
     runObsidian("orphans", { total, all }, vault),
 });
 
-export const obsidianDeadEndsTool = tool({
+export const obsidianDeadEndsTool = defineTool({
+  name: "obsidianDeadEndsTool",
   description:
     "List files in the vault that have no outgoing links (dead ends).",
   inputSchema: z.object({
@@ -337,7 +355,8 @@ export const obsidianDeadEndsTool = tool({
     runObsidian("deadends", { total, all }, vault),
 });
 
-export const obsidianUnresolvedLinksTool = tool({
+export const obsidianUnresolvedLinksTool = defineTool({
+  name: "obsidianUnresolvedLinksTool",
   description: "List unresolved (broken) links in the Obsidian vault.",
   inputSchema: z.object({
     total: z
@@ -359,7 +378,8 @@ export const obsidianUnresolvedLinksTool = tool({
 
 // ─── Tags ────────────────────────────────────────────────────────────────────
 
-export const obsidianListTagsTool = tool({
+export const obsidianListTagsTool = defineTool({
+  name: "obsidianListTagsTool",
   description:
     "List all tags in the Obsidian vault (or tags in a specific file).",
   inputSchema: z.object({
@@ -382,7 +402,8 @@ export const obsidianListTagsTool = tool({
     runObsidian("tags", { file, path, total, counts, sort, format }, vault),
 });
 
-export const obsidianGetTagTool = tool({
+export const obsidianGetTagTool = defineTool({
+  name: "obsidianGetTagTool",
   description: "Get info about a specific tag, including files that use it.",
   inputSchema: z.object({
     name: z.string().describe("Tag name (required)"),
@@ -397,7 +418,8 @@ export const obsidianGetTagTool = tool({
 
 // ─── Properties ──────────────────────────────────────────────────────────────
 
-export const obsidianListPropertiesTool = tool({
+export const obsidianListPropertiesTool = defineTool({
+  name: "obsidianListPropertiesTool",
   description:
     "List frontmatter properties in the vault or for a specific file.",
   inputSchema: z.object({
@@ -431,7 +453,8 @@ export const obsidianListPropertiesTool = tool({
     ),
 });
 
-export const obsidianReadPropertyTool = tool({
+export const obsidianReadPropertyTool = defineTool({
+  name: "obsidianReadPropertyTool",
   description: "Read the value of a specific frontmatter property from a file.",
   inputSchema: z.object({
     name: z.string().describe("Property name (required)"),
@@ -444,7 +467,8 @@ export const obsidianReadPropertyTool = tool({
     runObsidian("property:read", { name, file, path }, vault),
 });
 
-export const obsidianSetPropertyTool = tool({
+export const obsidianSetPropertyTool = defineTool({
+  name: "obsidianSetPropertyTool",
   description: "Set a frontmatter property on a file in the Obsidian vault.",
   inputSchema: z.object({
     name: z.string().describe("Property name (required)"),
@@ -462,7 +486,8 @@ export const obsidianSetPropertyTool = tool({
     runObsidian("property:set", { name, value, type, file, path }, vault),
 });
 
-export const obsidianRemovePropertyTool = tool({
+export const obsidianRemovePropertyTool = defineTool({
+  name: "obsidianRemovePropertyTool",
   description:
     "Remove a frontmatter property from a file in the Obsidian vault.",
   inputSchema: z.object({
@@ -478,7 +503,8 @@ export const obsidianRemovePropertyTool = tool({
 
 // ─── Links & Aliases ─────────────────────────────────────────────────────────
 
-export const obsidianGetLinksTool = tool({
+export const obsidianGetLinksTool = defineTool({
+  name: "obsidianGetLinksTool",
   description: "List outgoing links from a file in the Obsidian vault.",
   inputSchema: z.object({
     file: z.string().optional().describe("File name"),
@@ -491,7 +517,8 @@ export const obsidianGetLinksTool = tool({
     runObsidian("links", { file, path, total }, vault),
 });
 
-export const obsidianGetBacklinksTool = tool({
+export const obsidianGetBacklinksTool = defineTool({
+  name: "obsidianGetBacklinksTool",
   description:
     "List files that link to a given file (backlinks) in the Obsidian vault.",
   inputSchema: z.object({
@@ -510,7 +537,8 @@ export const obsidianGetBacklinksTool = tool({
     runObsidian("backlinks", { file, path, counts, total, format }, vault),
 });
 
-export const obsidianListAliasesTool = tool({
+export const obsidianListAliasesTool = defineTool({
+  name: "obsidianListAliasesTool",
   description: "List aliases defined in vault files.",
   inputSchema: z.object({
     file: z.string().optional().describe("Filter by file name"),
@@ -526,7 +554,8 @@ export const obsidianListAliasesTool = tool({
 
 // ─── Outline & Word Count ─────────────────────────────────────────────────────
 
-export const obsidianOutlineTool = tool({
+export const obsidianOutlineTool = defineTool({
+  name: "obsidianOutlineTool",
   description: "Show the heading outline of a file in the Obsidian vault.",
   inputSchema: z.object({
     file: z.string().optional().describe("File name"),
@@ -543,7 +572,8 @@ export const obsidianOutlineTool = tool({
     runObsidian("outline", { file, path, format, total }, vault),
 });
 
-export const obsidianWordCountTool = tool({
+export const obsidianWordCountTool = defineTool({
+  name: "obsidianWordCountTool",
   description: "Count words and characters in a file in the Obsidian vault.",
   inputSchema: z.object({
     file: z.string().optional().describe("File name"),
@@ -562,7 +592,8 @@ export const obsidianWordCountTool = tool({
 
 // ─── Daily Notes ─────────────────────────────────────────────────────────────
 
-export const obsidianDailyNoteReadTool = tool({
+export const obsidianDailyNoteReadTool = defineTool({
+  name: "obsidianDailyNoteReadTool",
   description: "Read the contents of today's daily note in Obsidian.",
   inputSchema: z.object({
     vault: z.string().optional().describe("Target vault name"),
@@ -571,7 +602,8 @@ export const obsidianDailyNoteReadTool = tool({
   execute: async ({ vault }) => runObsidian("daily:read", {}, vault),
 });
 
-export const obsidianDailyNotePathTool = tool({
+export const obsidianDailyNotePathTool = defineTool({
+  name: "obsidianDailyNotePathTool",
   description: "Get the file path of today's daily note in Obsidian.",
   inputSchema: z.object({
     vault: z.string().optional().describe("Target vault name"),
@@ -580,7 +612,8 @@ export const obsidianDailyNotePathTool = tool({
   execute: async ({ vault }) => runObsidian("daily:path", {}, vault),
 });
 
-export const obsidianOpenDailyNoteTool = tool({
+export const obsidianOpenDailyNoteTool = defineTool({
+  name: "obsidianOpenDailyNoteTool",
   description: "Open today's daily note in Obsidian.",
   inputSchema: z.object({
     paneType: z
@@ -594,7 +627,8 @@ export const obsidianOpenDailyNoteTool = tool({
     runObsidian("daily", { paneType }, vault),
 });
 
-export const obsidianDailyNoteAppendTool = tool({
+export const obsidianDailyNoteAppendTool = defineTool({
+  name: "obsidianDailyNoteAppendTool",
   description: "Append content to today's daily note in Obsidian.",
   inputSchema: z.object({
     content: z
@@ -613,7 +647,8 @@ export const obsidianDailyNoteAppendTool = tool({
     runObsidian("daily:append", { content, inline, open, paneType }, vault),
 });
 
-export const obsidianDailyNotePrependTool = tool({
+export const obsidianDailyNotePrependTool = defineTool({
+  name: "obsidianDailyNotePrependTool",
   description: "Prepend content to today's daily note in Obsidian.",
   inputSchema: z.object({
     content: z
@@ -637,7 +672,8 @@ export const obsidianDailyNotePrependTool = tool({
 
 // ─── Tasks ───────────────────────────────────────────────────────────────────
 
-export const obsidianListTasksTool = tool({
+export const obsidianListTasksTool = defineTool({
+  name: "obsidianListTasksTool",
   description: "List tasks in the Obsidian vault with filtering options.",
   inputSchema: z.object({
     file: z.string().optional().describe("Filter by file name"),
@@ -674,7 +710,8 @@ export const obsidianListTasksTool = tool({
     ),
 });
 
-export const obsidianTaskActionTool = tool({
+export const obsidianTaskActionTool = defineTool({
+  name: "obsidianTaskActionTool",
   description:
     "Show or update a specific task in the Obsidian vault (toggle, mark done/todo, or set a custom status).",
   inputSchema: z.object({
@@ -724,7 +761,8 @@ export const obsidianTaskActionTool = tool({
 
 // ─── Bookmarks ───────────────────────────────────────────────────────────────
 
-export const obsidianListBookmarksTool = tool({
+export const obsidianListBookmarksTool = defineTool({
+  name: "obsidianListBookmarksTool",
   description: "List all bookmarks in the Obsidian vault.",
   inputSchema: z.object({
     total: z.boolean().optional().describe("Return only the bookmark count"),
@@ -740,7 +778,8 @@ export const obsidianListBookmarksTool = tool({
     runObsidian("bookmarks", { total, verbose, format }, vault),
 });
 
-export const obsidianAddBookmarkTool = tool({
+export const obsidianAddBookmarkTool = defineTool({
+  name: "obsidianAddBookmarkTool",
   description: "Add a bookmark in the Obsidian vault.",
   inputSchema: z.object({
     file: z.string().optional().describe("File path to bookmark"),
@@ -765,7 +804,8 @@ export const obsidianAddBookmarkTool = tool({
 
 // ─── Templates ───────────────────────────────────────────────────────────────
 
-export const obsidianListTemplatesTool = tool({
+export const obsidianListTemplatesTool = defineTool({
+  name: "obsidianListTemplatesTool",
   description: "List available templates in the Obsidian vault.",
   inputSchema: z.object({
     total: z.boolean().optional().describe("Return only the template count"),
@@ -776,7 +816,8 @@ export const obsidianListTemplatesTool = tool({
     runObsidian("templates", { total }, vault),
 });
 
-export const obsidianReadTemplateTool = tool({
+export const obsidianReadTemplateTool = defineTool({
+  name: "obsidianReadTemplateTool",
   description: "Read the contents of an Obsidian template.",
   inputSchema: z.object({
     name: z.string().describe("Template name (required)"),
@@ -792,7 +833,8 @@ export const obsidianReadTemplateTool = tool({
     runObsidian("template:read", { name, resolve, title }, vault),
 });
 
-export const obsidianInsertTemplateTool = tool({
+export const obsidianInsertTemplateTool = defineTool({
+  name: "obsidianInsertTemplateTool",
   description: "Insert a template into the currently active file in Obsidian.",
   inputSchema: z.object({
     name: z.string().describe("Template name (required)"),
@@ -805,7 +847,8 @@ export const obsidianInsertTemplateTool = tool({
 
 // ─── Plugins ─────────────────────────────────────────────────────────────────
 
-export const obsidianListPluginsTool = tool({
+export const obsidianListPluginsTool = defineTool({
+  name: "obsidianListPluginsTool",
   description: "List installed plugins in the Obsidian vault.",
   inputSchema: z.object({
     filter: z
@@ -829,7 +872,8 @@ export const obsidianListPluginsTool = tool({
     ),
 });
 
-export const obsidianGetPluginTool = tool({
+export const obsidianGetPluginTool = defineTool({
+  name: "obsidianGetPluginTool",
   description: "Get information about a specific Obsidian plugin.",
   inputSchema: z.object({
     id: z.string().describe("Plugin ID (required)"),
@@ -839,7 +883,8 @@ export const obsidianGetPluginTool = tool({
   execute: async ({ id, vault }) => runObsidian("plugin", { id }, vault),
 });
 
-export const obsidianEnablePluginTool = tool({
+export const obsidianEnablePluginTool = defineTool({
+  name: "obsidianEnablePluginTool",
   description: "Enable an installed plugin in Obsidian.",
   inputSchema: z.object({
     id: z.string().describe("Plugin ID (required)"),
@@ -851,7 +896,8 @@ export const obsidianEnablePluginTool = tool({
     runObsidian("plugin:enable", { id, filter }, vault),
 });
 
-export const obsidianDisablePluginTool = tool({
+export const obsidianDisablePluginTool = defineTool({
+  name: "obsidianDisablePluginTool",
   description: "Disable an installed plugin in Obsidian.",
   inputSchema: z.object({
     id: z.string().describe("Plugin ID (required)"),
@@ -863,7 +909,8 @@ export const obsidianDisablePluginTool = tool({
     runObsidian("plugin:disable", { id, filter }, vault),
 });
 
-export const obsidianInstallPluginTool = tool({
+export const obsidianInstallPluginTool = defineTool({
+  name: "obsidianInstallPluginTool",
   description: "Install a community plugin in Obsidian.",
   inputSchema: z.object({
     id: z.string().describe("Plugin ID (required)"),
@@ -878,7 +925,8 @@ export const obsidianInstallPluginTool = tool({
     runObsidian("plugin:install", { id, enable }, vault),
 });
 
-export const obsidianUninstallPluginTool = tool({
+export const obsidianUninstallPluginTool = defineTool({
+  name: "obsidianUninstallPluginTool",
   description: "Uninstall a community plugin from Obsidian.",
   inputSchema: z.object({
     id: z.string().describe("Plugin ID (required)"),
@@ -889,7 +937,8 @@ export const obsidianUninstallPluginTool = tool({
     runObsidian("plugin:uninstall", { id }, vault),
 });
 
-export const obsidianReloadPluginTool = tool({
+export const obsidianReloadPluginTool = defineTool({
+  name: "obsidianReloadPluginTool",
   description:
     "Reload a plugin in Obsidian (useful during plugin development).",
   inputSchema: z.object({
@@ -902,7 +951,8 @@ export const obsidianReloadPluginTool = tool({
 
 // ─── Themes ───────────────────────────────────────────────────────────────────
 
-export const obsidianListThemesTool = tool({
+export const obsidianListThemesTool = defineTool({
+  name: "obsidianListThemesTool",
   description: "List installed themes in Obsidian.",
   inputSchema: z.object({
     versions: z.boolean().optional().describe("Include version numbers"),
@@ -913,7 +963,8 @@ export const obsidianListThemesTool = tool({
     runObsidian("themes", { versions }, vault),
 });
 
-export const obsidianGetThemeTool = tool({
+export const obsidianGetThemeTool = defineTool({
+  name: "obsidianGetThemeTool",
   description:
     "Show the active theme or get info about a specific installed theme.",
   inputSchema: z.object({
@@ -924,7 +975,8 @@ export const obsidianGetThemeTool = tool({
   execute: async ({ name, vault }) => runObsidian("theme", { name }, vault),
 });
 
-export const obsidianSetThemeTool = tool({
+export const obsidianSetThemeTool = defineTool({
+  name: "obsidianSetThemeTool",
   description:
     "Set the active theme in Obsidian (pass empty string to restore default).",
   inputSchema: z.object({
@@ -935,7 +987,8 @@ export const obsidianSetThemeTool = tool({
   execute: async ({ name, vault }) => runObsidian("theme:set", { name }, vault),
 });
 
-export const obsidianInstallThemeTool = tool({
+export const obsidianInstallThemeTool = defineTool({
+  name: "obsidianInstallThemeTool",
   description: "Install a community theme in Obsidian.",
   inputSchema: z.object({
     name: z.string().describe("Theme name (required)"),
@@ -950,7 +1003,8 @@ export const obsidianInstallThemeTool = tool({
     runObsidian("theme:install", { name, enable }, vault),
 });
 
-export const obsidianUninstallThemeTool = tool({
+export const obsidianUninstallThemeTool = defineTool({
+  name: "obsidianUninstallThemeTool",
   description: "Uninstall a theme from Obsidian.",
   inputSchema: z.object({
     name: z.string().describe("Theme name (required)"),
@@ -963,7 +1017,8 @@ export const obsidianUninstallThemeTool = tool({
 
 // ─── CSS Snippets ─────────────────────────────────────────────────────────────
 
-export const obsidianListSnippetsTool = tool({
+export const obsidianListSnippetsTool = defineTool({
+  name: "obsidianListSnippetsTool",
   description: "List installed CSS snippets in Obsidian.",
   inputSchema: z.object({
     enabledOnly: z.boolean().optional().describe("List only enabled snippets"),
@@ -974,7 +1029,8 @@ export const obsidianListSnippetsTool = tool({
     runObsidian(enabledOnly ? "snippets:enabled" : "snippets", {}, vault),
 });
 
-export const obsidianToggleSnippetTool = tool({
+export const obsidianToggleSnippetTool = defineTool({
+  name: "obsidianToggleSnippetTool",
   description: "Enable or disable a CSS snippet in Obsidian.",
   inputSchema: z.object({
     name: z.string().describe("Snippet name (required)"),
@@ -990,7 +1046,8 @@ export const obsidianToggleSnippetTool = tool({
 
 // ─── Sync ────────────────────────────────────────────────────────────────────
 
-export const obsidianSyncControlTool = tool({
+export const obsidianSyncControlTool = defineTool({
+  name: "obsidianSyncControlTool",
   description: "Pause or resume Obsidian Sync.",
   inputSchema: z.object({
     action: z
@@ -1003,7 +1060,8 @@ export const obsidianSyncControlTool = tool({
     runObsidian("sync", { [action]: true }, vault),
 });
 
-export const obsidianSyncStatusTool = tool({
+export const obsidianSyncStatusTool = defineTool({
+  name: "obsidianSyncStatusTool",
   description: "Show the current Obsidian Sync status.",
   inputSchema: z.object({
     vault: z.string().optional().describe("Target vault name"),
@@ -1012,7 +1070,8 @@ export const obsidianSyncStatusTool = tool({
   execute: async ({ vault }) => runObsidian("sync:status", {}, vault),
 });
 
-export const obsidianSyncHistoryTool = tool({
+export const obsidianSyncHistoryTool = defineTool({
+  name: "obsidianSyncHistoryTool",
   description: "List sync version history for a file in Obsidian Sync.",
   inputSchema: z.object({
     file: z.string().optional().describe("File name"),
@@ -1025,7 +1084,8 @@ export const obsidianSyncHistoryTool = tool({
     runObsidian("sync:history", { file, path, total }, vault),
 });
 
-export const obsidianSyncDeletedTool = tool({
+export const obsidianSyncDeletedTool = defineTool({
+  name: "obsidianSyncDeletedTool",
   description: "List deleted files tracked by Obsidian Sync.",
   inputSchema: z.object({
     total: z
@@ -1039,7 +1099,8 @@ export const obsidianSyncDeletedTool = tool({
     runObsidian("sync:deleted", { total }, vault),
 });
 
-export const obsidianSyncReadVersionTool = tool({
+export const obsidianSyncReadVersionTool = defineTool({
+  name: "obsidianSyncReadVersionTool",
   description: "Read a specific sync version of a file from Obsidian Sync.",
   inputSchema: z.object({
     version: z.number().describe("Version number (required)"),
@@ -1056,7 +1117,8 @@ export const obsidianSyncReadVersionTool = tool({
     ),
 });
 
-export const obsidianSyncRestoreVersionTool = tool({
+export const obsidianSyncRestoreVersionTool = defineTool({
+  name: "obsidianSyncRestoreVersionTool",
   description: "Restore a file to a specific sync version in Obsidian Sync.",
   inputSchema: z.object({
     version: z.number().describe("Version number (required)"),
@@ -1075,7 +1137,8 @@ export const obsidianSyncRestoreVersionTool = tool({
 
 // ─── File History (Local Recovery) ───────────────────────────────────────────
 
-export const obsidianHistoryListTool = tool({
+export const obsidianHistoryListTool = defineTool({
+  name: "obsidianHistoryListTool",
   description: "List local version history for a file in Obsidian.",
   inputSchema: z.object({
     file: z.string().optional().describe("File name"),
@@ -1087,7 +1150,8 @@ export const obsidianHistoryListTool = tool({
     runObsidian("history", { file, path }, vault),
 });
 
-export const obsidianHistoryReadTool = tool({
+export const obsidianHistoryReadTool = defineTool({
+  name: "obsidianHistoryReadTool",
   description: "Read a specific local history version of a file in Obsidian.",
   inputSchema: z.object({
     version: z.number().optional().describe("Version number (default: 1)"),
@@ -1104,7 +1168,8 @@ export const obsidianHistoryReadTool = tool({
     ),
 });
 
-export const obsidianHistoryRestoreTool = tool({
+export const obsidianHistoryRestoreTool = defineTool({
+  name: "obsidianHistoryRestoreTool",
   description:
     "Restore a file to a specific local history version in Obsidian.",
   inputSchema: z.object({
@@ -1124,7 +1189,8 @@ export const obsidianHistoryRestoreTool = tool({
 
 // ─── Bases ───────────────────────────────────────────────────────────────────
 
-export const obsidianListBasesTool = tool({
+export const obsidianListBasesTool = defineTool({
+  name: "obsidianListBasesTool",
   description: "List all base files (Obsidian Bases) in the vault.",
   inputSchema: z.object({
     vault: z.string().optional().describe("Target vault name"),
@@ -1133,7 +1199,8 @@ export const obsidianListBasesTool = tool({
   execute: async ({ vault }) => runObsidian("bases", {}, vault),
 });
 
-export const obsidianQueryBaseTool = tool({
+export const obsidianQueryBaseTool = defineTool({
+  name: "obsidianQueryBaseTool",
   description: "Query an Obsidian Base and return results.",
   inputSchema: z.object({
     file: z.string().optional().describe("Base file name"),
@@ -1150,7 +1217,8 @@ export const obsidianQueryBaseTool = tool({
     runObsidian("base:query", { file, path, view, format }, vault),
 });
 
-export const obsidianCreateBaseItemTool = tool({
+export const obsidianCreateBaseItemTool = defineTool({
+  name: "obsidianCreateBaseItemTool",
   description: "Create a new item in an Obsidian Base.",
   inputSchema: z.object({
     file: z.string().optional().describe("Base file name"),
@@ -1170,7 +1238,8 @@ export const obsidianCreateBaseItemTool = tool({
     ),
 });
 
-export const obsidianBaseViewsTool = tool({
+export const obsidianBaseViewsTool = defineTool({
+  name: "obsidianBaseViewsTool",
   description: "List views in the current Obsidian Base file.",
   inputSchema: z.object({
     vault: z.string().optional().describe("Target vault name"),
@@ -1181,7 +1250,8 @@ export const obsidianBaseViewsTool = tool({
 
 // ─── Commands & Hotkeys ───────────────────────────────────────────────────────
 
-export const obsidianListCommandsTool = tool({
+export const obsidianListCommandsTool = defineTool({
+  name: "obsidianListCommandsTool",
   description: "List all available commands in the Obsidian command palette.",
   inputSchema: z.object({
     filter: z.string().optional().describe("Filter commands by ID prefix"),
@@ -1192,7 +1262,8 @@ export const obsidianListCommandsTool = tool({
     runObsidian("commands", { filter }, vault),
 });
 
-export const obsidianExecuteCommandTool = tool({
+export const obsidianExecuteCommandTool = defineTool({
+  name: "obsidianExecuteCommandTool",
   description: "Execute an Obsidian command by its command ID.",
   inputSchema: z.object({
     id: z.string().describe("Command ID to execute (required)"),
@@ -1202,7 +1273,8 @@ export const obsidianExecuteCommandTool = tool({
   execute: async ({ id, vault }) => runObsidian("command", { id }, vault),
 });
 
-export const obsidianListHotkeysTool = tool({
+export const obsidianListHotkeysTool = defineTool({
+  name: "obsidianListHotkeysTool",
   description: "List hotkeys configured in Obsidian.",
   inputSchema: z.object({
     total: z.boolean().optional().describe("Return only the hotkey count"),
@@ -1222,7 +1294,8 @@ export const obsidianListHotkeysTool = tool({
     runObsidian("hotkeys", { total, verbose, all, format }, vault),
 });
 
-export const obsidianGetHotkeyTool = tool({
+export const obsidianGetHotkeyTool = defineTool({
+  name: "obsidianGetHotkeyTool",
   description: "Get the hotkey configured for a specific Obsidian command.",
   inputSchema: z.object({
     id: z.string().describe("Command ID (required)"),
@@ -1239,14 +1312,16 @@ export const obsidianGetHotkeyTool = tool({
 
 // ─── Utility ─────────────────────────────────────────────────────────────────
 
-export const obsidianVersionTool = tool({
+export const obsidianVersionTool = defineTool({
+  name: "obsidianVersionTool",
   description: "Show the current Obsidian version.",
   inputSchema: z.object({}),
   outputSchema: z.string(),
   execute: async () => runObsidian("version"),
 });
 
-export const obsidianRandomReadTool = tool({
+export const obsidianRandomReadTool = defineTool({
+  name: "obsidianRandomReadTool",
   description: "Read a random note from the Obsidian vault.",
   inputSchema: z.object({
     folder: z.string().optional().describe("Limit to a specific folder"),
@@ -1257,7 +1332,8 @@ export const obsidianRandomReadTool = tool({
     runObsidian("random:read", { folder }, vault),
 });
 
-export const obsidianRecentFilesTool = tool({
+export const obsidianRecentFilesTool = defineTool({
+  name: "obsidianRecentFilesTool",
   description: "List recently opened files in Obsidian.",
   inputSchema: z.object({
     total: z.boolean().optional().describe("Return only the count"),
@@ -1267,7 +1343,8 @@ export const obsidianRecentFilesTool = tool({
   execute: async ({ total, vault }) => runObsidian("recents", { total }, vault),
 });
 
-export const obsidianWorkspaceTool = tool({
+export const obsidianWorkspaceTool = defineTool({
+  name: "obsidianWorkspaceTool",
   description: "Show the current Obsidian workspace layout tree.",
   inputSchema: z.object({
     ids: z.boolean().optional().describe("Include workspace item IDs"),
@@ -1277,7 +1354,8 @@ export const obsidianWorkspaceTool = tool({
   execute: async ({ ids, vault }) => runObsidian("workspace", { ids }, vault),
 });
 
-export const obsidianListTabsTool = tool({
+export const obsidianListTabsTool = defineTool({
+  name: "obsidianListTabsTool",
   description: "List currently open tabs in Obsidian.",
   inputSchema: z.object({
     ids: z.boolean().optional().describe("Include tab IDs"),
@@ -1287,7 +1365,8 @@ export const obsidianListTabsTool = tool({
   execute: async ({ ids, vault }) => runObsidian("tabs", { ids }, vault),
 });
 
-export const obsidianDiffTool = tool({
+export const obsidianDiffTool = defineTool({
+  name: "obsidianDiffTool",
   description: "List or diff local vs sync versions of a file in Obsidian.",
   inputSchema: z.object({
     file: z.string().optional().describe("File name"),

@@ -1,9 +1,9 @@
-import { ToolLoopAgent } from "ai";
-import { openrouterAiSdkProvider } from "../../dependencies/ai-sdk/providers";
-import { sumListOfNumbersTool, sumTwoNumbersTool } from "../../tools";
+import { sumListOfNumbersTool, sumTwoNumbersTool } from "../tools";
+import type { AgentDefinition } from "./types";
 
-export const financialAgent = new ToolLoopAgent({
-  model: openrouterAiSdkProvider.chat("deepseek/deepseek-v4-flash"),
+export const financialAgentDefinition: AgentDefinition = {
+  name: "financialAgent",
+  model: { provider: "openrouter", model: "deepseek/deepseek-v4-flash" },
   instructions: `You are an arithmetic helper for financial data. Use the provided tools to compute totals and sums from numbers supplied in the request.
 
 Tool selection:
@@ -11,5 +11,5 @@ Tool selection:
 - sumListOfNumbersTool — total a list of three or more amounts in one call.
 
 You do not have access to the user's accounts or transaction history. Work only with the numbers explicitly provided. Always label your result clearly (e.g. "Total: 1234.56"). If the numbers needed to answer the request are missing, say so instead of guessing.`,
-  tools: { sumTwoNumbersTool, sumListOfNumbersTool },
-});
+  tools: [sumTwoNumbersTool, sumListOfNumbersTool],
+};

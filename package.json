@@ -10,9 +10,13 @@
     "typescript": "^5"
   },
   "dependencies": {
+    "@langchain/core": "^1.1.48",
+    "@langchain/ollama": "^1.2.7",
+    "@langchain/openai": "^1.4.7",
     "@openrouter/ai-sdk-provider": "^2.9.0",
     "ai": "^6.0.198",
     "ai-sdk-ollama": "^3.8.6",
+    "langchain": "^1.4.4",
     "ollama-ai-provider-v2": "^3.5.1",
     "zod": "^4.4.3"
   }

@@ -1,11 +1,9 @@
-import { ToolLoopAgent } from "ai";
-import { ollamaAiSdkProvider } from "../../dependencies/ai-sdk/providers";
-import { humanTools } from "../../tools";
+import { humanTools } from "../tools";
+import type { AgentDefinition } from "./types";
 
-const model = ollamaAiSdkProvider.chat("qwen3.5:2b");
-
-export const humanInTheLoopAgent = new ToolLoopAgent({
-  model,
+export const humanInTheLoopAgentDefinition: AgentDefinition = {
+  name: "humanInTheLoopAgent",
+  model: { provider: "ollama", model: "qwen3.5:2b" },
   instructions: `You collect input from the human using the most specific tool that matches the situation. Never ask for information that is already available.
 
 Tool selection guide:
@@ -19,5 +17,5 @@ Tool selection guide:
 - rateHumanTool — ask the human to score something on a numeric scale, optionally with a reason.
 
 Return the human's response verbatim to the calling agent without summarizing or interpreting it.`,
-  tools: humanTools,
-});
+  tools: Object.values(humanTools),
+};
