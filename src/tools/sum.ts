@@ -27,3 +27,5 @@ export const sumListOfNumbersTool = tool({
     return numbers.reduce((acc, num) => acc + num, 0);
   },
 });
+
+export const sumTools = { sumTwoNumbersTool, sumListOfNumbersTool };
