@@ -1,6 +1,6 @@
 import { ToolLoopAgent } from "ai";
 import { ollamaAiSdkProvider } from "../../dependencies/ai-sdk/providers";
-import { obsidianTools } from "../../tools";
+import { obsidianTools } from "../../tools/ai-sdk";
 
 // const model = ollamaAiSdkProvider.chat("gemma4:e4b");
 // const model = ollamaAiSdkProvider.chat("llama3.2:3b");

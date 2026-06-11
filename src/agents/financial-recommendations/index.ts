@@ -1,6 +1,6 @@
 import { ToolLoopAgent } from "ai";
 import { openrouterAiSdkProvider } from "../../dependencies/ai-sdk/providers";
-import { sumListOfNumbersTool, sumTwoNumbersTool } from "../../tools";
+import { sumListOfNumbersTool, sumTwoNumbersTool } from "../../tools/ai-sdk";
 
 export const financialAgent = new ToolLoopAgent({
   model: openrouterAiSdkProvider.chat("deepseek/deepseek-v4-flash"),

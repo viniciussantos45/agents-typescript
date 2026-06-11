@@ -1,6 +1,6 @@
 import { ToolLoopAgent } from "ai";
 import { ollamaAiSdkProvider } from "../../dependencies/ai-sdk/providers";
-import { humanTools } from "../../tools";
+import { humanTools } from "../../tools/ai-sdk";
 
 const model = ollamaAiSdkProvider.chat("qwen3.5:2b");
 
