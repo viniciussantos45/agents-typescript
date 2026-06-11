@@ -22,16 +22,19 @@ async function promptAsync(question: string): Promise<string> {
 //   ) as string;
 // } while (!message);
 
-const result = await personalAssistantAgent.invoke({
-  messages: [
-    {
-      role: "user",
-      content: await promptAsync(
-        "Make a question to the agent about your notes in Obsidian. For example, you can ask 'What are the main topics I have notes on?' or 'Summarize my notes from last week:\n",
-      ),
-    },
-  ],
-});
+const result = await personalAssistantAgent.invoke(
+  {
+    messages: [
+      {
+        role: "user",
+        content: await promptAsync(
+          "Make a question to the agent about your notes in Obsidian. For example, you can ask 'What are the main topics I have notes on?' or 'Summarize my notes from last week:\n",
+        ),
+      },
+    ],
+  },
+  { recursionLimit: 1000 },
+);
 
 console.log(result.messages);
 console.log(result.messages[result.messages.length - 1]?.content);

@@ -265,7 +265,7 @@ export const obsidianVaultInfoTool = tool(
   {
     name: "obsidian_vault_info",
     description:
-      "Show information about the Obsidian vault (name, path, file count, etc.).",
+      "Show information about the Obsidian vault. Info field accepts only one value from enum",
     schema: z.object({
       info: z
         .enum(["name", "path", "files", "folders", "size"])
@@ -319,8 +319,7 @@ export const obsidianListFoldersTool = tool(
 );
 
 export const obsidianFolderInfoTool = tool(
-  async ({ path, info, vault }) =>
-    runObsidian("folder", { path, info }, vault),
+  async ({ path, info, vault }) => runObsidian("folder", { path, info }, vault),
   {
     name: "obsidian_folder_info",
     description:
@@ -713,7 +712,18 @@ export const obsidianDailyNotePrependTool = tool(
 // ─── Tasks ───────────────────────────────────────────────────────────────────
 
 export const obsidianListTasksTool = tool(
-  async ({ file, path, total, done, todo, status, verbose, format, daily, vault }) =>
+  async ({
+    file,
+    path,
+    total,
+    done,
+    todo,
+    status,
+    verbose,
+    format,
+    daily,
+    vault,
+  }) =>
     runObsidian(
       "tasks",
       { file, path, total, done, todo, status, verbose, format, daily },
@@ -1088,8 +1098,7 @@ export const obsidianToggleSnippetTool = tool(
 // ─── Sync ────────────────────────────────────────────────────────────────────
 
 export const obsidianSyncControlTool = tool(
-  async ({ action, vault }) =>
-    runObsidian("sync", { [action]: true }, vault),
+  async ({ action, vault }) => runObsidian("sync", { [action]: true }, vault),
   {
     name: "obsidian_sync_control",
     description: "Pause or resume Obsidian Sync.",
@@ -1206,8 +1215,7 @@ export const obsidianHistoryReadTool = tool(
     ),
   {
     name: "obsidian_history_read",
-    description:
-      "Read a specific local history version of a file in Obsidian.",
+    description: "Read a specific local history version of a file in Obsidian.",
     schema: z.object({
       version: z.number().optional().describe("Version number (default: 1)"),
       file: z.string().optional().describe("File name"),
@@ -1308,8 +1316,7 @@ export const obsidianListCommandsTool = tool(
   async ({ filter, vault }) => runObsidian("commands", { filter }, vault),
   {
     name: "obsidian_list_commands",
-    description:
-      "List all available commands in the Obsidian command palette.",
+    description: "List all available commands in the Obsidian command palette.",
     schema: z.object({
       filter: z.string().optional().describe("Filter commands by ID prefix"),
       vault: z.string().optional().describe("Target vault name"),
@@ -1370,14 +1377,11 @@ export const obsidianGetHotkeyTool = tool(
 
 // ─── Utility ─────────────────────────────────────────────────────────────────
 
-export const obsidianVersionTool = tool(
-  async () => runObsidian("version"),
-  {
-    name: "obsidian_version",
-    description: "Show the current Obsidian version.",
-    schema: z.object({}),
-  },
-);
+export const obsidianVersionTool = tool(async () => runObsidian("version"), {
+  name: "obsidian_version",
+  description: "Show the current Obsidian version.",
+  schema: z.object({}),
+});
 
 export const obsidianRandomReadTool = tool(
   async ({ folder, vault }) => runObsidian("random:read", { folder }, vault),

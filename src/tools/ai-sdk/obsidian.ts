@@ -28,7 +28,7 @@ async function runObsidian(
   const stdout = new TextDecoder().decode(proc.stdout).trim();
   const stderr = new TextDecoder().decode(proc.stderr).trim();
 
-  if (proc.exitCode !== 0) {
+  if ((proc.exitCode !== 0, stdout.includes("Error:"))) {
     throw new Error(
       stderr || `obsidian ${command} failed (exit ${proc.exitCode})`,
     );
