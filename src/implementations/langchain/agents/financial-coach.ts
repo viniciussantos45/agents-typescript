@@ -6,7 +6,7 @@ const model = new ChatOpenRouter({
   model: "deepseek/deepseek-v4-flash",
 });
 
-const agent = createAgent({
+export const financialCoachAgent = createAgent({
   model,
   systemPrompt: `You are an arithmetic helper for financial data. Use the provided tools to compute totals and sums from numbers supplied in the request.
 
@@ -17,13 +17,3 @@ Tool selection:
 You do not have access to the user's accounts or transaction history. Work only with the numbers explicitly provided. Always label your result clearly (e.g. "Total: 1234.56"). If the numbers needed to answer the request are missing, say so instead of guessing.`,
   tools: sumTools,
 });
-
-async function runAgent(prompt: string) {
-  return await agent.invoke({
-    messages: [{ role: "user", content: prompt }],
-  });
-}
-
-export const financialCoachAgent = {
-  runAgent,
-};

@@ -1,23 +1,37 @@
-import { financialCoachAgent } from "./src/implementations/langchain/agents/financial-coach";
+import { personalAssistantAgent } from "./src/implementations/langchain/agents/personal-assistant";
 
-const result = await financialCoachAgent.runAgent("Sum 500, 52, 123 values");
 // const result = await personalAssistantAgent.generate({
 //   prompt: "Check what are my long term goals for this year in my vault",
 // });
 
-// // let message: string;
+async function promptAsync(question: string): Promise<string> {
+  process.stdout.write(question);
 
-// // do {
-// //   message = prompt(
-// //     "Make a question to the agent about your notes in Obsidian. For example, you can ask 'What are the main topics I have notes on?' or 'Summarize my notes from last week.'",
-// //   ) as string;
-// // } while (!message);
+  for await (const line of console) {
+    return line;
+  }
 
-// // const result = await obsidianOrchestratorAgent.generate({
-// //   prompt: message,
-// // });
+  return "";
+}
 
-// console.log(JSON.stringify(result, null, 2));
-// console.log(result.text);
+// let message: string;
 
+// do {
+//   message = prompt(
+//     "Make a question to the agent about your notes in Obsidian. For example, you can ask 'What are the main topics I have notes on?' or 'Summarize my notes from last week:\n",
+//   ) as string;
+// } while (!message);
+
+const result = await personalAssistantAgent.invoke({
+  messages: [
+    {
+      role: "user",
+      content: await promptAsync(
+        "Make a question to the agent about your notes in Obsidian. For example, you can ask 'What are the main topics I have notes on?' or 'Summarize my notes from last week:\n",
+      ),
+    },
+  ],
+});
+
+console.log(result.messages);
 console.log(result.messages[result.messages.length - 1]?.content);
