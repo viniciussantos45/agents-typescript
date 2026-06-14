@@ -3,7 +3,7 @@ import { createAgent } from "langchain";
 import { humanTools } from "../../../tools/langchain";
 
 const model = new ChatOllama({
-  model: "qwen3.5:2b",
+  model: "gemma4:12b-mlx",
 });
 
 export const humanInTheLoopAgent = createAgent({

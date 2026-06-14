@@ -1,9 +1,9 @@
-import { ChatOpenRouter } from "@langchain/openrouter";
+import { ChatOllama } from "@langchain/ollama";
 import { createAgent } from "langchain";
 import { sumTools } from "../../../tools/langchain";
 
-const model = new ChatOpenRouter({
-  model: "deepseek/deepseek-v4-flash",
+const model = new ChatOllama({
+  model: "gemma4:12b-mlx",
 });
 
 export const financialCoachAgent = createAgent({

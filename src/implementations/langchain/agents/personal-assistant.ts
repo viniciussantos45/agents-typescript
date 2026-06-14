@@ -6,7 +6,7 @@ import { humanInTheLoopAgent } from "./human-in-the-loop";
 import { obsidianOrchestratorAgent } from "./obsidian-orchestrator";
 
 const model = new ChatOllama({
-  model: "qwen3.5:2b",
+  model: "gemma4:12b-mlx",
 });
 
 const financialCoachSubAgent = tool(
@@ -17,7 +17,7 @@ const financialCoachSubAgent = tool(
     return result.messages.at(-1)?.content;
   },
   {
-    name: "financial coach",
+    name: "financial_coach",
     description: "Financial questions and sums values",
     schema: z.object({ query: z.string() }),
   },
@@ -31,7 +31,7 @@ const humanInTheLoopSubAgent = tool(
     return result.messages.at(-1)?.content;
   },
   {
-    name: "human in the loop",
+    name: "human_in_the_loop_subagent",
     description: "Ask questions to user",
     schema: z.object({ query: z.string() }),
   },
@@ -45,11 +45,13 @@ const obsidianSubAgent = tool(
     return result.messages.at(-1)?.content;
   },
   {
-    name: "obsidian",
+    name: "obsidian_subagent",
     description: "Manage obsidian vaults",
     schema: z.object({ query: z.string() }),
   },
 );
+
+// const checkpointer = new MemorySaver();
 
 export const personalAssistantAgent = createAgent({
   model,
@@ -69,5 +71,6 @@ Execution rules:
 - After every tool result, immediately evaluate whether the original user goal is fully accomplished. If not, call the next required tool right away.
 - Never generate a final text response mid-task. A text response is only appropriate when the complete user request has been satisfied and you have the result to present.
 - If humanInTheLoopSubAgent returns a clarification (e.g. a corrected name, a confirmed choice), use that answer immediately to continue the task — do not stop to report that you asked.`,
+  // checkpointer,
   tools: [financialCoachSubAgent, humanInTheLoopSubAgent, obsidianSubAgent],
 });

@@ -22,6 +22,10 @@ async function promptAsync(question: string): Promise<string> {
 //   ) as string;
 // } while (!message);
 
+const threadConfig = {
+  // configurable: { thread_id: "2" },
+  recursionLimit: 30,
+};
 const result = await personalAssistantAgent.invoke(
   {
     messages: [
@@ -33,8 +37,7 @@ const result = await personalAssistantAgent.invoke(
       },
     ],
   },
-  { recursionLimit: 1000 },
+  threadConfig,
 );
 
-console.log(result.messages);
 console.log(result.messages[result.messages.length - 1]?.content);
