@@ -34,6 +34,13 @@ async function runObsidian(
     );
   }
 
+  if (stdout.includes("Error:")) {
+    const start = stdout.indexOf("Error:");
+    const errorMessage = stdout.substring(start);
+
+    return errorMessage;
+  }
+
   return stdout;
 }
 
